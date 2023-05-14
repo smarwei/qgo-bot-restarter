@@ -17,9 +17,15 @@
         mkdir -p $out/bin
         cat > $out/bin/restart-bots <<EOF
         #!/bin/sh
+
         docker stop prodbots-malli
         docker rm prodbots-malli
         docker run -d --name prodbots-malli --restart=always --network=host indeedael/qgo-ai:100.0 --fast 1 m
+
+        docker stop prodbots-qnugo
+        docker rm prodbots-qnugo
+        docker run -d --name prodbots-qnugo --restart=always --network=host indeedael/qgo-ai:100.0 --fast 1 q
+
         EOF
         chmod +x $out/bin/restart-bots
       '';
